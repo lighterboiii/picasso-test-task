@@ -1,0 +1,14 @@
+{
+  "files": {
+    "main.css": "/picasso-test-task/static/css/main.94aa6631.css",
+    "main.js": "/picasso-test-task/static/js/main.d6079b85.js",
+    "static/media/GitHub_Logo.png": "/picasso-test-task/static/media/GitHub_Logo.746ec8f0bc97208f903e.png",
+    "index.html": "/picasso-test-task/index.html",
+    "main.94aa6631.css.map": "/picasso-test-task/static/css/main.94aa6631.css.map",
+    "main.d6079b85.js.map": "/picasso-test-task/static/js/main.d6079b85.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.94aa6631.css",
+    "static/js/main.d6079b85.js"
+  ]
+}

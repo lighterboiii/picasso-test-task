@@ -1,13 +1,14 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useGetPostsQuery } from '../api/api.ts';
 import { Link } from 'react-router-dom';
 import styles from './PostsList.module.css';
 import InfiniteScroll from 'react-infinite-scroll-component';
+import Loader from '../Loader/Loader.tsx';
 
 const PostsList: React.FC = () => {
   const [page, setPage] = useState<number>(1);
   const { data: posts, refetch } = useGetPostsQuery('posts');
-
+  console.log(posts);
   const loadMore = () => {
     setPage((prevPage) => prevPage + 1);
   }
@@ -17,11 +18,11 @@ const PostsList: React.FC = () => {
   }, [page, refetch]);
 
   if (!posts) {
-    return <div className={styles.loader}>Загрузка постов...</div>
+    return <Loader text='Загрузка постов...' />
   }
 
   const renderedPosts = posts.slice(0, page * 2);
-  console.log(renderedPosts);
+
   return (
     <InfiniteScroll
       dataLength={renderedPosts.length}
@@ -30,7 +31,6 @@ const PostsList: React.FC = () => {
       loader={<h4>Loading...</h4>}
     >
       <>
-        <h1 className={styles.title}>Picasso Test Task</h1>
         <ul className={styles.postsList}>
           {renderedPosts?.map((post) =>
             <li className={styles.post} key={post.id}>

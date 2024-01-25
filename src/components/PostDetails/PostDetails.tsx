@@ -3,7 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import { useGetPostByIdQuery } from '../api/api.ts';
 
 const PostDetail: React.FC = () => {
-  const { postId } = useParams();
+  const { id: postId } = useParams();
   const { data: post } = useGetPostByIdQuery(postId);
   console.log(post);
   if (!post) {

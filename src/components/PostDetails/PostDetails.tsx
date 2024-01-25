@@ -1,6 +1,7 @@
 import React from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { useGetPostByIdQuery } from '../api/api.ts';
+import styles from './PostDetails.module.css';
 
 const PostDetail: React.FC = () => {
   const { id: postId } = useParams();

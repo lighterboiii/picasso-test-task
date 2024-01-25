@@ -9,7 +9,7 @@ const App: React.FC = () => {
   return (
     <>
       <Header title='Picasso Test Task' />
-      <Router>
+      <Router basename={process.env.PUBLIC_URL}>
         <Routes>
           <Route path="/" element={<PostsList />} />
           <Route path="/post/:id" element={<PostDetails />} />

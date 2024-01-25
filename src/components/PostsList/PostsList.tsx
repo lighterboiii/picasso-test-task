@@ -4,11 +4,12 @@ import { Link } from 'react-router-dom';
 import styles from './PostsList.module.css';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import Loader from '../Loader/Loader.tsx';
+import { TPost } from '../../utils/types/posts.ts';
 
 const PostsList: React.FC = () => {
   const [page, setPage] = useState<number>(1);
   const { data: posts, refetch } = useGetPostsQuery('posts');
-  console.log(posts);
+
   const loadMore = () => {
     setPage((prevPage) => prevPage + 1);
   }
@@ -32,7 +33,7 @@ const PostsList: React.FC = () => {
     >
       <>
         <ul className={styles.postsList}>
-          {renderedPosts?.map((post) =>
+          {renderedPosts?.map((post: TPost) =>
             <li className={styles.post} key={post.id}>
               <h2 className={styles.postTitle}>{post.title}</h2>
               <div className={styles.postBody}>

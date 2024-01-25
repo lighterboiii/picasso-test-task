@@ -6,16 +6,16 @@ import styles from './PostDetails.module.css';
 const PostDetail: React.FC = () => {
   const { id: postId } = useParams();
   const { data: post } = useGetPostByIdQuery(postId);
-  console.log(post);
+
   if (!post) {
     return <div>Загрузка данных...</div>;
   }
 
   return (
-    <div>
-      <h2>{post.title}</h2>
-      <p>{post.body}</p>
-      <Link to="/">Назад</Link>
+    <div className={styles.post}>
+      <h2 className={styles.title}>{post.title}</h2>
+      <p className={styles.text}>{post.body}</p>
+      <Link className={styles.link} to="/">Назад</Link>
     </div>
   );
 };

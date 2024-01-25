@@ -1,34 +1,52 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useGetPostsQuery } from '../api/api.ts';
 import { Link } from 'react-router-dom';
 import styles from './PostsList.module.css';
+import InfiniteScroll from 'react-infinite-scroll-component';
 
 const PostsList: React.FC = () => {
-  const { data: posts } = useGetPostsQuery('postsApi');
-  console.log(posts);
-  if (!posts) {
-    return <div>Загрузка постов...</div>
+  const [page, setPage] = useState<number>(1);
+  const { data: posts, refetch } = useGetPostsQuery('posts');
+
+  const loadMore = () => {
+    setPage((prevPage) => prevPage + 1);
   }
 
-  return (
-    <div>
-      <h1 className={styles.title}>Picasso Test Task</h1>
-      <ul className={styles.postsList}>
-        {posts?.map((post) =>
-          <li className={styles.post} key={post.id}>
-            <h2 className={styles.postTitle}>{post.title}</h2>
-            <div className={styles.postBody}>
-              <p className={styles.number}>{post.id}</p>
-              <div className={styles.text}>
-                {post.body.slice(0, 100)}...
-                <Link to={`/post/${post.id}`}>Просмотр</Link>
-              </div>
-            </div>
-          </li>
-        )}
-      </ul>
-    </div>
+  useEffect(() => {
+    refetch();
+  }, [page, refetch]);
 
+  if (!posts) {
+    return <div className={styles.loader}>Загрузка постов...</div>
+  }
+
+  const renderedPosts = posts.slice(0, page * 2);
+  console.log(renderedPosts);
+  return (
+    <InfiniteScroll
+      dataLength={renderedPosts.length}
+      next={loadMore}
+      hasMore={renderedPosts.length < posts.length}
+      loader={<h4>Loading...</h4>}
+    >
+      <>
+        <h1 className={styles.title}>Picasso Test Task</h1>
+        <ul className={styles.postsList}>
+          {renderedPosts?.map((post) =>
+            <li className={styles.post} key={post.id}>
+              <h2 className={styles.postTitle}>{post.title}</h2>
+              <div className={styles.postBody}>
+                <p className={styles.number}>{post.id}</p>
+                <div className={styles.text}>
+                  {post.body.slice(0, 100)}...
+                  <Link className={styles.link} to={`/post/${post.id}`}>Просмотр</Link>
+                </div>
+              </div>
+            </li>
+          )}
+        </ul>
+      </>
+    </InfiniteScroll>
   );
 };
 
